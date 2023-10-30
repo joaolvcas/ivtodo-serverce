@@ -76,6 +76,20 @@ app.patch("/person/:id", async (req, res) => {
   }
 });
 
+app.delete("/person/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const person = await Person.findOne({ _id: id });
+
+    await Person.deleteOne(person);
+
+    res.status(200).json("Deletado com sucesso");
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+});
+
 mongoose
   .connect(
     "mongodb+srv://joaolucasdevp:UzMbepovEsGPRULa@apicluster.2fvwqnf.mongodb.net/?retryWrites=true&w=majority"
